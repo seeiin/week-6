@@ -1,0 +1,6 @@
+from flask import Blueprint
+
+# membuat blueprint untuk task
+taskBp = Blueprint("task", __name__)
+
+from app.task import routes
