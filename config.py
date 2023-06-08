@@ -1,10 +1,10 @@
 import os
-# from sqlalchemy import create_engine, text
 
+# mendapatkan path project
 basedir = os.path.abspath(os.path.dirname(__file__))
-DB_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
-# engine = create_engine(DB_URI)
+# konfigurasi path database
+DB_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
 class Config:
     SECRET_KEY = '123'
