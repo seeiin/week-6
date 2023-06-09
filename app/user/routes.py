@@ -56,12 +56,19 @@ def create_user():
     
     # mendapatkan request json dari client
     data = request.get_json()
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+
+    # Validasi input
+    if not name or not email or not password:
+        return jsonify({'message': 'incomplete data'}), 422
 
     # membuat user baru
     new_user = Users(
-        name = data.get("name"),
-        email = data.get("email"),
-        password = data.get("password"))
+        name = name,
+        email = email,
+        password = password)
     
     # menambahkan data ke database
     db.session.add(new_user)
@@ -90,6 +97,9 @@ def edit_user(id):
     
     # mendapatkan request json dari client
     data = request.get_json()
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
     
     # mendapatkan data berdasarkan id user
     user = Users.query.filter_by(id=id).first()
@@ -99,13 +109,13 @@ def edit_user(id):
         return jsonify({'error': 'user not found'}), 422
     
     # cek apakah data request dari user ada yang kosong
-    if not data.get("name") or not data.get("email") or not data.get("password"):
+    if not name or not email or not password:
         return jsonify({'message': 'incomplete data'}), 422
     else:
         # melakukan overwrite data
-        user.name = data.get("name")
-        user.email = data.get("email")
-        user.password = data.get("password")
+        user.name = name
+        user.email = email
+        user.password = password
         db.session.commit()
     
     # membuat response
