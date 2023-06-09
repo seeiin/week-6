@@ -86,11 +86,18 @@ def create_task():
     
     # mendapatkan request json dari client
     data = request.get_json()
+    title = data.get("title")
+    description = data.get("description")
+    user_id = data.get("user_id")
+
+    # Validasi input
+    if not title or not description or not user_id:
+        return jsonify({'message': 'incomplete data'}),422
 
     # menambahkan task baru
-    new_task = Tasks(title = data.get("title"),
-                     description = data.get("description"),
-                     user_id = data.get("user_id"))
+    new_task = Tasks(title = title,
+                     description = description,
+                     user_id = user_id)
     
     # menambahkan data ke database
     db.session.add(new_task)
@@ -119,6 +126,8 @@ def edit_task(id):
     
     # mendapatkan request json dari client
     data = request.get_json()
+    title = data.get("title")
+    description = data.get("description")
     
     # mendapatkan data berdasarkan id task
     task = Tasks.query.filter_by(id=id).first()
@@ -128,12 +137,12 @@ def edit_task(id):
         return jsonify({'error': 'task not found'}), 422
     
     # cek apakah data request dari user ada yang kosong
-    if not data.get("title") or not data.get("description"):
+    if not title or not description:
         return jsonify({'message': 'incomplete data'}), 422
     else:
         # melakukan overwrite description dan title
-        task.title = data.get("title")
-        task.description = data.get("description")
+        task.title = title
+        task.description = description
         
     # melakukan commit ke database
     db.session.commit()
