@@ -97,8 +97,12 @@ def edit_user(id):
     # cek apakah variable hasil query kosong
     if not user:
         return jsonify({'error': 'user not found'}), 422
+    
+    # cek apakah data request dari user ada yang kosong
+    if not data.get("name") or not data.get("email") or not data.get("password"):
+        return jsonify({'message': 'incomplete data'}), 422
     else:
-        # melakukan overwrite description dan title
+        # melakukan overwrite data
         user.name = data.get("name")
         user.email = data.get("email")
         user.password = data.get("password")
