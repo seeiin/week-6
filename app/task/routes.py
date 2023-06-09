@@ -126,6 +126,10 @@ def edit_task(id):
     # cek apakah variable hasil query kosong
     if not task:
         return jsonify({'error': 'task not found'}), 422
+    
+    # cek apakah data request dari user ada yang kosong
+    if not data.get("title") or not data.get("description"):
+        return jsonify({'message': 'incomplete data'}), 422
     else:
         # melakukan overwrite description dan title
         task.title = data.get("title")
