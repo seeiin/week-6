@@ -6,7 +6,7 @@ class Tasks(db.Model):
     title = db.Column(db.String(64))
     description = db.Column(db.String(1024))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    user = db.relationship('Users', back_populates = 'task')
+    user = db.relationship('Users', back_populates = 'tasks')
 
     # fungsi serialize untuk mengembalikan data dictionary
     def serialize(self): 
