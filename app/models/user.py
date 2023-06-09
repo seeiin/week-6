@@ -6,7 +6,7 @@ class Users(db.Model):
     name = db.Column(db.String(64))
     email = db.Column(db.String(128))
     password = db.Column(db.String(1024))
-    task = db.relationship('Tasks', back_populates='user')
+    tasks = db.relationship('Tasks', back_populates='user')
 
     # fungsi serialize untuk mengembalikan data dictionary
     def serialize(self): 
